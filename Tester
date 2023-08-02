@@ -1,0 +1,21 @@
+parameters {
+        string(name: 'REPO_NAME_1', defaultValue: 'book-rest-api-spring-security-jwt', description: 'First repository name')
+        string(name: 'BRANCH_1', defaultValue: 'master', description: 'master')
+        string(name: 'REPO_NAME_2', defaultValue: 'mytamil', description: 'Second repository name')
+        string(name: 'BRANCH_2', defaultValue: 'master', description: 'master')
+    }
+
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                // Checkout repo1
+                checkout([$class: 'GitSCM', branches: [[name: "refs/heads/${params.BRANCH_1}"]], 
+                          userRemoteConfigs: [[url: "https://github.com/tamilza/${params.REPO_NAME_1}.git"]]])
+                
+                // Checkout repo2
+                checkout([$class: 'GitSCM', branches: [[name: "refs/heads/${params.BRANCH_2}"]], 
+                          userRemoteConfigs: [[url: "https://github.com/tamilza/${params.REPO_NAME_2}.git"]]])
+            }
+        }
+    }
+}
